@@ -1,15 +1,15 @@
 // src/pages/ProductsPage.tsx
 
 import React, { useEffect } from "react";
-import { useProduct } from "../context/ProductContext";
+import { useProduct } from "../hooks/useProduct";
 import ProductList from "../components/ProductList";
 import styles from "./ProductsPage.module.css";
 
 const ProductsPage: React.FC = () => {
-  const { products, loading, error, fetchProducts } = useProduct();  // Usando diretamente do contexto
+  const { products, loading, error, fetchProducts } = useProduct();
 
   useEffect(() => {
-    fetchProducts();  // Carrega os produtos ao montar o componente
+    fetchProducts();
   }, [fetchProducts]);
 
   return (
@@ -23,9 +23,7 @@ const ProductsPage: React.FC = () => {
         <p className={styles.noProductsText}>Nenhum produto encontrado.</p>
       )}
 
-      {!loading && !error && products.length > 0 && (
-        <ProductList />
-      )}
+      {!loading && !error && products.length > 0 && <ProductList />}
     </div>
   );
 };

@@ -3,8 +3,6 @@
 import React, { useEffect, useState } from "react";
 import { FaHeart, FaRegHeart, FaCartPlus } from "react-icons/fa";
 import styles from "./ProductCard.module.css";
-
-// Interface do produto (você pode importar isso se já estiver tipado)
 export interface Product {
   id: string;
   name: string;

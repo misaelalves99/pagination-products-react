@@ -3,7 +3,7 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import ProductList from "../components/ProductList";
-import { useProduct } from "../context/ProductContext";
+import { useProduct } from "../hooks/useProduct";
 import styles from "./HomePage.module.css";
 
 const HomePage: React.FC = () => {
@@ -13,7 +13,7 @@ const HomePage: React.FC = () => {
   const featuredProducts = products.slice(0, 6);
 
   const handleNavigate = () => {
-    navigate("/produtos");
+    navigate("/products");
   };
 
   return (
@@ -29,9 +29,7 @@ const HomePage: React.FC = () => {
       <section className={styles.featuredSection}>
         <h2 className={styles.sectionTitle}>Produtos em Destaque</h2>
         <div className={styles.productGrid}>
-          {featuredProducts.map((product) => (
-            <ProductList key={product.id} />
-          ))}
+          <ProductList products={featuredProducts} />
         </div>
       </section>
     </main>

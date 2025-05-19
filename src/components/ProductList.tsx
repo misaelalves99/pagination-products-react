@@ -3,13 +3,20 @@
 import React, { useEffect, useState } from "react";
 import ProductCard from "./ProductCard";
 import Pagination from "./Pagination";
-import { useProduct } from "../context/ProductContext";
+import { useProduct } from "../hooks/useProduct";
+import { Product } from "../types/product";
 import styles from "./ProductList.module.css";
 
-const ProductList: React.FC = () => {
-  const { products, loading, error } = useProduct();
+type ProductListProps = {
+  products?: Product[];
+};
+
+const ProductList: React.FC<ProductListProps> = ({ products: productsProp }) => {
+  const { products: contextProducts, loading, error } = useProduct();
+  const products = productsProp ?? contextProducts;
+
   const [currentPage, setCurrentPage] = useState(1);
-  const [paginatedProducts, setPaginatedProducts] = useState(products);
+  const [paginatedProducts, setPaginatedProducts] = useState<Product[]>([]);
 
   useEffect(() => {
     const startIndex = (currentPage - 1) * 20;
@@ -28,12 +35,11 @@ const ProductList: React.FC = () => {
           <ProductCard key={product.id} product={product} />
         ))}
       </div>
-      <div className={styles.paginationWrapper}>
-        <Pagination
-          totalPages={Math.ceil(products.length / 20)}
-          onPageChange={setCurrentPage}
-        />
-      </div>
+      {products.length > 20 && (
+        <div className={styles.paginationWrapper}>
+          <Pagination totalPages={Math.ceil(products.length / 20)} onPageChange={setCurrentPage} />
+        </div>
+      )}
     </div>
   );
 };
